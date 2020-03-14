@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/entry_form.dart';
+import '../widgets/firebase_analytics.dart';
 
 class AddPost extends StatefulWidget {
 
@@ -74,11 +75,13 @@ class AddPostState extends State<AddPost> {
   }
 
   void choosePhoto() async {
+    analytics.logEvent(name: 'pick_image');
     image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() { });
   }
 
   void takePhoto() async {
+    analytics.logEvent(name: 'take_photo');
     image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() { });
   }

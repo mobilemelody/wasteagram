@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/post.dart';
 import '../screens/add_post.dart';
+import '../screens/crash.dart';
 import '../widgets/posts.dart';
+import '../widgets/firebase_analytics.dart';
 
 class PostsView extends StatefulWidget {
 
@@ -26,34 +28,23 @@ class PostsViewState extends State<PostsView> {
           posts = snapshotToPost(snapshot.data.documents);
           posts.sort((b, a) => a.date.compareTo(b.date));
           getTotalItems();
-          return postsContent();
+          return postsContent(Posts(posts: posts));
         } else {
           totalItems = 0;
-          return noPostsContent();
+          return postsContent(Center(child: CircularProgressIndicator()));
         }
       },
     );
   }
 
-  Widget postsContent() {
+  Widget postsContent(Widget body) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Wasteagram - $totalItems'),
         centerTitle: true,
+        actions: <Widget>[crashButton()],
       ),
-      body: Posts(posts: posts),
-      floatingActionButton: addPostButton(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-
-  Widget noPostsContent() {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Wasteagram - $totalItems'),
-        centerTitle: true,
-      ),
-      body: Center(child: CircularProgressIndicator()),
+      body: body,
       floatingActionButton: addPostButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -93,5 +84,16 @@ class PostsViewState extends State<PostsView> {
     posts.forEach((e) {
       totalItems += e.numItems;
     });
+  }
+
+  Widget crashButton() {
+    return IconButton(
+      icon: Icon(Icons.error),
+      tooltip: 'Crash App',
+      onPressed: () {
+        analytics.logEvent(name: 'crash_app');
+        Navigator.pushNamed(context, Crash.routeName);
+      }
+    );
   }
 }

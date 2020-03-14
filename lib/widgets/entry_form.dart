@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:location/location.dart';
 import 'package:path/path.dart' as Path;
 import '../models/post.dart';
+import '../widgets/firebase_analytics.dart';
 
 class EntryForm extends StatefulWidget {
 
@@ -130,6 +131,12 @@ class EntryFormState extends State<EntryForm> {
 
       // Save post to Firestore
       Firestore.instance.collection('posts').add(postFields.toMap());
+
+      // Log data to analytics
+      analytics.logEvent(
+        name: 'add_post',
+        parameters: postFields.toMapWithDateString(),
+      );
       
       Navigator.of(context).pop();
     }

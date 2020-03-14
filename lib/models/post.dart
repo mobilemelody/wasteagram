@@ -23,4 +23,14 @@ class Post {
       'date': date,
     };
   }
+
+  Map<String, dynamic> toMapWithDateString() {
+    return {
+      'photoUrl': photoUrl,
+      'numItems': numItems,
+      'latitude': latitude,
+      'longitude': longitude,
+      'date': dateString(),
+    };
+  }
 }
