@@ -56,19 +56,23 @@ class EntryFormState extends State<EntryForm> {
     ];
   }
   
-  // TODO: add semantics widget
   Widget numField() {
-    return TextFormField(
-      autofocus: true,
-      decoration: InputDecoration(
-        labelText: 'Number of Items',
-        border: OutlineInputBorder()
+    return Semantics(
+      child: TextFormField(
+        autofocus: true,
+        decoration: InputDecoration(
+          labelText: 'Number of Items',
+          border: OutlineInputBorder()
+        ),
+        keyboardType: TextInputType.number,
+        onSaved: (value) {
+          postFields.numItems = int.parse(value);
+        },
+        validator: (value) => checkInteger(value)
       ),
-      keyboardType: TextInputType.number,
-      onSaved: (value) {
-        postFields.numItems = int.parse(value);
-      },
-      validator: (value) => checkInteger(value)
+      label: 'Number of items field',
+      textField: true,
+      enabled: true
     );
   }
 
@@ -85,11 +89,16 @@ class EntryFormState extends State<EntryForm> {
     );
   }
 
-  // TODO: add semantics widget
   Widget uploadButton() {
-    return RaisedButton(
-      child: Icon(Icons.cloud_upload, size: 80.0),
-      onPressed: () { savePost(); }
+    return Semantics(
+      child: RaisedButton(
+        child: Icon(Icons.cloud_upload, size: 80.0),
+        onPressed: () { savePost(); }
+      ),
+      label: 'Upload button',
+      button: true,
+      enabled: true,
+      onTapHint: 'Upload photo and save post'
     );
   }
 

@@ -59,13 +59,18 @@ class PostsViewState extends State<PostsView> {
     );
   }
 
-  // TODO: add semantics widget
   Widget addPostButton(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {
-        Navigator.pushNamed(context, AddPost.routeName);
-      }
+    return Semantics(
+      child: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, AddPost.routeName);
+        }
+      ),
+      label: 'Add post button',
+      button: true,
+      enabled: true,
+      onTapHint: 'Tap to add a post'
     );
   }
 

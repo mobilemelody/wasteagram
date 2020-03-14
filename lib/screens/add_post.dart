@@ -35,16 +35,41 @@ class AddPostState extends State<AddPost> {
     }
   }
 
-  // TODO: add semantics widget
   Widget photoButtons() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          RaisedButton(child: Text('Choose Photo'), onPressed: () { choosePhoto(); }),
-          RaisedButton(child: Text('Take Photo'), onPressed: () { takePhoto(); })
+          choosePhotoButton(),
+          takePhotoButton()
         ]
       ),
+    );
+  }
+
+  Widget choosePhotoButton() {
+    return Semantics(
+      child: RaisedButton(
+        child: Text('Choose Photo'), 
+        onPressed: () { choosePhoto(); }
+      ),
+      label: 'Choose photo button',
+      button: true,
+      enabled: true,
+      onTapHint: 'Opens the gallery to select a photo',
+    );
+  }
+
+  Widget takePhotoButton() {
+    return Semantics(
+      child: RaisedButton(
+        child: Text('Take Photo'), 
+        onPressed: () { takePhoto(); }
+      ),
+      label: 'Take photo button',
+      button: true,
+      enabled: true,
+      onTapHint: 'Opens the camera to take a photo',
     );
   }
 

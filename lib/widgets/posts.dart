@@ -21,16 +21,20 @@ class Posts extends StatelessWidget{
     );
   }
 
-  // TODO: add semantics widget
   Widget listTile(BuildContext context, int index) {
-    return ListTile(
-      title: Text(posts[index].dateString()),
-      trailing: numberIcon(posts[index].numItems),
-      onTap: () { Navigator.pushNamed(
-        context, 
-        DetailView.routeName, 
-        arguments: posts[index]
-      ); }
+    return Semantics(
+      child: ListTile(
+        title: Text(posts[index].dateString()),
+        trailing: numberIcon(posts[index].numItems),
+        onTap: () { Navigator.pushNamed(
+          context, 
+          DetailView.routeName, 
+          arguments: posts[index]
+        ); }
+      ),
+      label: 'An individual post',
+      enabled: true,
+      onTapHint: 'Tap to see post details'
     );
   }
 
